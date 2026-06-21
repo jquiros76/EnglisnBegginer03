@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ruta360 – Unidad 4: Grammar Foundations</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+:root{--brand:#8B5CF6;--dark:#7C3AED;--light:#8B5CF622;--mid:#8B5CF644;--bg:#0F1117;--s1:#1A1D27;--s2:#22263A;--s3:#2C3050;--txt:#E8EAF6;--muted:#8892B0;--dim:#4A5578;--ok:#22C55E;--err:#EF4444;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--s1);border-right:1px solid var(--s3);display:flex;flex-direction:column;z-index:100;overflow:hidden;}
+.sh{padding:18px 16px 14px;background:linear-gradient(135deg,var(--dark),var(--brand));flex-shrink:0;}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.plbl{font-size:11px;color:rgba(255,255,255,.75);margin-top:3px;line-height:1.3;}
+.prog{margin-top:9px;background:rgba(255,255,255,.2);border-radius:99px;height:4px;overflow:hidden;}
+.pf{height:100%;background:#fff;border-radius:99px;transition:width .4s;}
+.pl{font-size:11px;color:rgba(255,255,255,.8);margin-top:4px;}
+.ll{flex:1;overflow-y:auto;padding:6px 0;}
+.ll::-webkit-scrollbar{width:4px;}.ll::-webkit-scrollbar-thumb{background:var(--s3);border-radius:99px;}
+.li{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;border-left:3px solid transparent;transition:background .15s;}
+.li:hover{background:var(--s2)}.li.active{background:var(--light);border-left-color:var(--brand);}
+.ln{width:26px;height:26px;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;}
+.li.active .ln{background:var(--brand);color:#fff;}.li.done .ln{background:var(--ok);color:#fff;}
+.li.ckpt .ln{background:linear-gradient(135deg,#F59E0B,#F97316);color:#fff;}
+.lt{font-size:12px;color:var(--muted);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.li.active .lt{color:var(--txt);}
+
+
+
+.main{margin-left:256px;flex:1;}
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--s2);padding:11px 26px;display:flex;align-items:center;gap:10px;}
+.btn{padding:6px 14px;border-radius:7px;border:1px solid var(--s3);background:var(--s1);color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.btn:hover:not(:disabled){border-color:var(--brand);color:var(--brand);}.btn:disabled{opacity:.3;cursor:not-allowed;}
+.tts{padding:6px 11px;border-radius:7px;background:var(--s1);border:1px solid var(--s3);color:var(--muted);font-size:17px;cursor:pointer;transition:all .15s;line-height:1;}
+.tts:hover{border-color:var(--brand);color:var(--brand);}
+.badge{margin-left:auto;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--brand);background:var(--light);padding:4px 11px;border-radius:99px;}
+.content{padding:26px 30px 56px;max-width:840px;}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);background:var(--light);padding:3px 10px;border-radius:99px;margin-bottom:9px;}
+h1.t{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--txt);line-height:1.2;letter-spacing:-.4px;}
+.obj{margin-top:7px;font-size:14px;color:var(--muted);line-height:1.5;}.lh{margin-bottom:22px;}
+.sec{background:var(--s1);border-radius:13px;border:1px solid var(--s2);margin-bottom:16px;overflow:hidden;}
+.sh2{padding:13px 18px 11px;border-bottom:1px solid var(--s2);display:flex;align-items:center;gap:9px;cursor:pointer;}
+.sico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--light);}
+.slbl{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--txt);}
+.stog{margin-left:auto;color:var(--dim);font-size:11px;}
+.sbody{padding:16px 18px;}.sbody.col{display:none;}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:7px;}
+.vc{background:var(--s2);border-radius:7px;padding:9px 12px;cursor:pointer;border:1px solid transparent;transition:all .15s;}
+.vc:hover{border-color:var(--brand);background:var(--light);}
+.ven{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--txt);}
+.ves{font-size:11px;color:var(--muted);}.vsic{font-size:9px;color:var(--brand);margin-top:2px;}
+.grule{background:linear-gradient(135deg,var(--light),var(--mid));border-left:3px solid var(--brand);border-radius:7px;padding:13px 15px;margin-bottom:13px;}
+.grl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand);margin-bottom:3px;}
+.grt{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--txt);}
+.el{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.ei{display:flex;align-items:center;gap:9px;background:var(--s2);border-radius:7px;padding:8px 13px;font-size:13px;color:var(--txt);}
+.edot{color:var(--brand);font-size:14px;}.esp{margin-left:auto;background:none;border:none;color:var(--dim);cursor:pointer;font-size:13px;padding:2px;}
+.esp:hover{color:var(--brand);}
+.ex{background:var(--s2);border-radius:13px;padding:16px;margin-bottom:12px;border:1px solid var(--s3);}
+.ex.ok{border-color:var(--ok);background:#052012;}.ex.no{border-color:var(--err);background:#1a0505;}
+.exn{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.exq{font-size:14px;font-weight:500;color:var(--txt);margin-bottom:12px;line-height:1.4;}
+.opts{display:flex;flex-direction:column;gap:7px;}
+.ob{padding:9px 14px;background:var(--s3);border:1px solid transparent;border-radius:7px;color:var(--txt);font-size:13px;text-align:left;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.ob:hover:not(:disabled){border-color:var(--brand);background:var(--light);}.ob.ca{background:#052012;border-color:var(--ok);color:var(--ok);}.ob.wa{background:#1a0505;border-color:var(--err);color:var(--err);}
+.fw{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
+.fi{padding:8px 13px;background:var(--s3);border:1px solid var(--dim);border-radius:7px;color:var(--txt);font-size:13px;outline:none;min-width:170px;font-family:'DM Sans',sans-serif;transition:border-color .15s;}
+.fi:focus{border-color:var(--brand);}.fi.ok{border-color:var(--ok);background:#052012;color:var(--ok);}.fi.no{border-color:var(--err);background:#1a0505;}
+.fh{font-size:11px;color:var(--dim);font-style:italic;margin-top:5px;}
+.cb{padding:8px 18px;border-radius:7px;background:var(--brand);border:none;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;}
+.cb:hover{filter:brightness(1.15);}
+.fb{margin-top:9px;font-size:12px;font-weight:500;display:none;}.fb.show{display:block;}.fb.ok{color:var(--ok);}.fb.no{color:var(--err);}
+.spg{display:flex;flex-direction:column;gap:7px;}
+.spr{display:flex;align-items:center;gap:11px;background:var(--s2);border-radius:7px;padding:11px 14px;}
+.spt{flex:1;font-size:14px;color:var(--txt);line-height:1.4;}
+.spb{background:var(--light);border:1px solid var(--brand);border-radius:7px;padding:7px 13px;color:var(--brand);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Space Grotesk',sans-serif;transition:all .15s;}
+.spb:hover,.spb.pl{background:var(--brand);color:#fff;}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}.spb.pl{animation:pulse 1s infinite;}
+.tip{background:linear-gradient(135deg,#1a1100,#251a00);border:1px solid #F59E0B44;border-left:3px solid #F59E0B;border-radius:13px;padding:13px 16px;display:flex;gap:11px;align-items:flex-start;}
+.tipico{font-size:17px;flex-shrink:0;}.tiptxt{font-size:13px;color:#FCD34D;line-height:1.5;}
+.sbar{background:var(--s1);border:1px solid var(--s2);border-radius:13px;padding:14px 18px;display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.slb{font-size:12px;color:var(--muted);}.sv{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--brand);}
+.st{flex:1;height:5px;background:var(--s2);border-radius:99px;overflow:hidden;}.sf{height:100%;background:var(--brand);border-radius:99px;transition:width .5s;}
+.rst{background:none;border:1px solid var(--s3);border-radius:6px;padding:4px 11px;color:var(--muted);font-size:11px;cursor:pointer;}
+.rst:hover{border-color:var(--err);color:var(--err);}
+@media(max-width:768px){.sidebar{display:none;}.main{margin-left:0;}.content{padding:16px 14px 40px;}.vg{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sh">
+    <div class="logo">Ruta360 🇬🇧 — Fase 1</div>
+    <div class="plbl">Unidad 4: Grammar Foundations<br>Lecciones 31–40 · Plurales, Posesivos, Demostrativos, WH</div>
+    <div class="prog"><div class="pf" id="pf"></div></div>
+    <div class="pl" id="pl">0 / 10 completadas</div>
+  </div>
+  <div class="ll" id="ll"></div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <button class="btn" id="pb" onclick="nav(-1)">← Anterior</button>
+    <button class="btn" id="nb" onclick="nav(1)">Siguiente →</button>
+    <button class="tts" onclick="sp(LS[ci].title)" title="Escuchar título">🔊</button>
+    <div class="badge" id="bg">Lección 31</div>
+  </div>
+  <div class="content" id="mc"></div>
+</div>
+<script>
+const LS=[{"n":31,"phase":1,"title":"Telling Time – Half & Quarter","obj":"Say times using half past and quarter to/past.","vocab":[["Half past","Y media"],["Quarter past","Y cuarto"],["Quarter to","Menos cuarto"],["Thirty","Treinta"],["Fifteen","Quince"],["Forty-five","Cuarenta y cinco"],["AM","De la mañana"],["PM","De la tarde"],["Noon","Mediodía"],["Midnight","Medianoche"]],"grammar":{"rule":"Half past / Quarter past / Quarter to + hour","examples":["It is half past three. (3:30)","It is quarter past seven. (7:15)","It is quarter to nine. (8:45)"]},"exercises":[{"type":"quiz","q":"'Half past six' means:","opts":["6:15","6:45","5:30","6:30"],"ans":3},{"type":"fill","q":"It is ___ past four. (4:15)","blank":"quarter","hint":"15 minutes past"},{"type":"quiz","q":"'Quarter to eight' means:","opts":["8:15","7:45","8:45","7:15"],"ans":1},{"type":"fill","q":"It is half ___ two. (2:30)","blank":"past","hint":"Half PAST the hour"}],"tip":"Half past = :30. Quarter past = :15. Quarter TO = 15 minutes BEFORE the next hour.","speak":["It is half past eight.","It is quarter past two.","It is quarter to five.","What time is it? It is noon!"]},{"n":32,"phase":1,"title":"Seasons & Nature","obj":"Describe 4 seasons and nature vocabulary.","vocab":[["Spring","Primavera"],["Summer","Verano"],["Autumn / Fall","Otoño"],["Winter","Invierno"],["Flower","Flor"],["Tree","Árbol"],["Leaf","Hoja"],["Rain","Lluvia"],["Snow","Nieve"],["River","Río"]],"grammar":{"rule":"'In spring, it is ___ and ___.'","examples":["In summer, it is hot and sunny.","In winter, it is cold and sometimes snowy.","In spring, the flowers bloom."]},"exercises":[{"type":"quiz","q":"In which season do leaves fall from trees?","opts":["spring","summer","winter","autumn"],"ans":3},{"type":"fill","q":"In summer, it is very ___.","blank":"hot","hint":"High temperature"},{"type":"quiz","q":"'It is snowy' — which season is it probably?","opts":["spring","summer","autumn","winter"],"ans":3},{"type":"fill","q":"In spring, the ___ bloom.","blank":"flowers","hint":"Beautiful plants that grow"}],"tip":"In Costa Rica and tropical countries, the seasons are WET (rainy) and DRY. The four classic seasons are typical of countries further from the equator.","speak":["In spring, it is warm and beautiful.","Summer is hot and sunny.","I love autumn because the leaves change color.","Winter can be cold and snowy."]},{"n":33,"phase":1,"title":"Adjectives – Describing Things","obj":"Use 12 descriptive adjectives in sentences.","vocab":[["Beautiful","Hermoso/Bonito"],["Ugly","Feo"],["Clean","Limpio"],["Dirty","Sucio"],["New","Nuevo"],["Old","Viejo"],["Easy","Fácil"],["Difficult","Difícil"],["Fast","Rápido"],["Slow","Lento"],["Loud","Ruidoso"],["Quiet","Tranquilo/Silencioso"]],"grammar":{"rule":"Adjective BEFORE noun OR after 'be'","examples":["It is a beautiful flower.","The flower is beautiful.","My new car is fast.","English is not difficult!"]},"exercises":[{"type":"quiz","q":"Which sentence is CORRECT?","opts":["It is a car beautiful.","It is a beautiful car.","It is beautiful car.","Is a beautiful car it."],"ans":1},{"type":"fill","q":"My room is very ___. (sin desorden)","blank":"clean","hint":"The opposite of dirty"},{"type":"quiz","q":"'Difficult' means:","opts":["fácil","difícil","rápido","lento"],"ans":1},{"type":"fill","q":"A sports car is very ___.","blank":"fast","hint":"Opposite of slow"}],"tip":"Adjectives NEVER change for singular/plural in English! A fast car. Two fast cars. NOT 'fasts cars'.","speak":["It is a beautiful day!","English is a little difficult but very interesting.","My phone is new and fast.","The music is too loud!"]},{"n":34,"phase":1,"title":"Plural Nouns","obj":"Form regular and common irregular plurals.","vocab":[["Books","Libros"],["Pencils","Lápices"],["Buses","Autobuses"],["Boxes","Cajas"],["Children","Niños"],["Men","Hombres"],["Women","Mujeres"],["Teeth","Dientes"],["Feet","Pies"],["Mice","Ratones"]],"grammar":{"rule":"Regular: +s / +es / +ies. Irregular: must memorize","examples":["one book → two books","one bus → two buses","one child → three children","one tooth → two teeth"]},"exercises":[{"type":"quiz","q":"What is the plural of 'child'?","opts":["childs","childes","children","childre"],"ans":2},{"type":"fill","q":"One man, two ___.","blank":"men","hint":"Irregular plural"},{"type":"quiz","q":"The plural of 'box' is:","opts":["boxs","box","boxies","boxes"],"ans":3},{"type":"fill","q":"I brush my ___ twice a day.","blank":"teeth","hint":"Irregular plural of 'tooth'"}],"tip":"Most nouns: add -S. Nouns ending in -s, -sh, -ch, -x: add -ES. Nouns ending in -y: change to -IES. Then memorize the irregular ones!","speak":["I have two books.","The children are playing.","I brush my teeth every morning.","There are five buses at the stop."]},{"n":35,"phase":1,"title":"Possessives – Mine & Yours","obj":"Use possessive adjectives and 's correctly.","vocab":[["My","Mi/Mis"],["Your","Tu/Tus"],["His","Su (de él)"],["Her","Su (de ella)"],["Its","Su (de ello)"],["Our","Nuestro/a"],["Their","Su (de ellos)"],["Mine","El mío/La mía"],["Yours","El tuyo/La tuya"],["Whose?","¿De quién?"]],"grammar":{"rule":"Possessive adjective + noun / Noun + 's","examples":["My book is red.","This is Maria's book.","Whose pen is this? It is his pen.","That car is theirs."]},"exercises":[{"type":"quiz","q":"'Maria's book' means:","opts":["Maria lee un libro","El libro es de Maria","Un libro para Maria","Maria tiene libros"],"ans":1},{"type":"fill","q":"This is ___ pencil. (it belongs to me)","blank":"my","hint":"First person possessive"},{"type":"quiz","q":"Which is correct: 'the dog of John' OR 'John's dog'?","opts":["the dog of John","John's dog","Both are correct","Neither"],"ans":1},{"type":"fill","q":"What is ___ name? (asking about someone's name)","blank":"your","hint":"Second person possessive"}],"tip":"In English we prefer possessive 's: John's car (NOT the car of John). This is much more natural!","speak":["This is my book.","That is Maria's pen.","Whose bag is this?","It is his bag."]},{"n":36,"phase":1,"title":"This, That, These, Those","obj":"Use demonstrative pronouns correctly.","vocab":[["This","Este/Esta (cercano)"],["That","Ese/Esa/Aquel (lejano)"],["These","Estos/Estas (cercano, plural)"],["Those","Esos/Esas (lejano, plural)"],["Near","Cerca"],["Far","Lejos"],["Here","Aquí"],["There","Allá"],["Singular","Singular"],["Plural","Plural"]],"grammar":{"rule":"This/These (near), That/Those (far). Singular/Plural","examples":["This is my pen. (near, singular)","These are my books. (near, plural)","That is your bag. (far, singular)","Those are her shoes. (far, plural)"]},"exercises":[{"type":"quiz","q":"You point to a pen that is far away. You say:","opts":["This is a pen.","These is a pen.","Those is a pen.","That is a pen."],"ans":3},{"type":"fill","q":"___ are my books. (near, more than one)","blank":"These","hint":"Near + plural"},{"type":"quiz","q":"'Those are expensive' — you are talking about things that are:","opts":["near and singular","near and plural","far and singular","far and plural"],"ans":3},{"type":"fill","q":"___ is my house. (pointing to a house far away)","blank":"That","hint":"Far + singular"}],"tip":"NEAR: this (1), these (2+). FAR: that (1), those (2+). Easy to remember!","speak":["This is my phone.","These are my books.","That is a beautiful house.","Those are my friends over there!"]},{"n":37,"phase":1,"title":"There Is / There Are","obj":"Describe quantities and existence of things.","vocab":[["There is","Hay (singular)"],["There are","Hay (plural)"],["There isn't","No hay (singular)"],["There aren't","No hay (plural)"],["How many?","¿Cuántos?"],["A lot of","Mucho/Muchos"],["Some","Algunos"],["Any","Algún (en preguntas/negativas)"],["Few","Pocos"],["None","Ninguno"]],"grammar":{"rule":"There IS + singular. There ARE + plural. Negative and question forms.","examples":["There is a cat in the garden.","There are three dogs in the park.","There isn't any milk.","Are there any students? Yes, there are!"]},"exercises":[{"type":"quiz","q":"'There ___ a book on the table.' (one book)","opts":["are","is","aren't","isn't"],"ans":1},{"type":"fill","q":"There ___ three students in the class.","blank":"are","hint":"Three = plural, use 'are'"},{"type":"quiz","q":"'There aren't any chairs' means:","opts":["Hay muchas sillas","Hay algunas sillas","No hay sillas","¿Hay sillas?"],"ans":2},{"type":"fill","q":"___ there a bathroom here? Yes, there is!","blank":"Is","hint":"Question form with singular"}],"tip":"'Are there any…?' / 'Is there a…?' Use 'any' in questions and negatives. Use 'some' in affirmatives.","speak":["There is a cat in my house.","There are many students in my class.","Is there a pharmacy near here?","There aren't any problems!"]},{"n":38,"phase":1,"title":"Likes & Dislikes + Like + -ing","obj":"Express preferences using like/love/hate + gerund.","vocab":[["Like","Gustar"],["Love","Encantar"],["Enjoy","Disfrutar"],["Hate","Odiar"],["Prefer","Preferir"],["Don't mind","No importar"],["Cooking","Cocinar"],["Swimming","Nadar"],["Reading","Leer"],["Drawing","Dibujar"]],"grammar":{"rule":"Like/love/hate + VERB-ING (gerund)","examples":["I like swimming.","She loves cooking.","He hates cleaning.","I enjoy reading books.","Do you like dancing? Yes, I love it!"]},"exercises":[{"type":"quiz","q":"Which is CORRECT?","opts":["I like swim.","I like to swimming.","I like swimming.","I likes swimming."],"ans":2},{"type":"fill","q":"She loves ___. (to cook → gerund)","blank":"cooking","hint":"Add -ING to cook"},{"type":"quiz","q":"'I hate cleaning' means:","opts":["Me gusta limpiar","Odio limpiar","Disfruto limpiar","Prefiero limpiar"],"ans":1},{"type":"fill","q":"Do you enjoy ___? (to read → gerund)","blank":"reading","hint":"Add -ING to read"}],"tip":"After LIKE, LOVE, HATE, ENJOY — use the -ING form (gerund): 'I love dancing' NOT 'I love dance'.","speak":["I love swimming!","She enjoys cooking.","I hate cleaning the house.","Do you like reading?"]},{"n":39,"phase":1,"title":"Asking Questions – WH Words","obj":"Form questions with who, what, where, when, why, how.","vocab":[["Who","Quién"],["What","Qué"],["Where","Dónde"],["When","Cuándo"],["Why","Por qué"],["How","Cómo"],["How many","Cuántos"],["How old","Qué edad"],["How much","Cuánto"],["Because","Porque"]],"grammar":{"rule":"WH word + auxiliary + subject + main verb","examples":["What do you do?","Where does she live?","When does school start?","Why do you like English?","How many brothers do you have?"]},"exercises":[{"type":"quiz","q":"'___ is your name?' (asking for a name)","opts":["Where","When","What","Who"],"ans":2},{"type":"fill","q":"___ do you go to school? By bus.","blank":"How","hint":"Asking about method/way"},{"type":"quiz","q":"'Why do you like English?' — a good answer starts with:","opts":["What","Because","When","Where"],"ans":1},{"type":"fill","q":"___ does she live? In San José.","blank":"Where","hint":"Asking about location"}],"tip":"The auxiliary depends on the subject: What DO you eat? What DOES she eat? What DID they eat?","speak":["What is your name?","Where do you live?","When do you go to school?","Why do you like English? Because it is useful!"]},{"n":40,"phase":1,"title":"CHECKPOINT 4 – Game & Review","obj":"Review lessons 31–39 through interactive games.","vocab":[["Plural","Plural"],["Possessive","Posesivo"],["Demonstrative","Demostrativo"],["Adjective","Adjetivo"],["Question word","Palabra de pregunta"],["Gerund","Gerundio"],["Preposition","Preposición"],["Preference","Preferencia"],["Description","Descripción"],["Routine","Rutina"]],"grammar":{"rule":"Review all structures from L31–39","examples":["These are John's books. They are new.","I love swimming and I hate cleaning.","Where do you live? Why do you like it?"]},"exercises":[{"type":"quiz","q":"'The children's books' — how many children?","opts":["One","Two","Three","Unknown, but more than one"],"ans":3},{"type":"fill","q":"I love ___. (to read)","blank":"reading","hint":"Gerund form"},{"type":"quiz","q":"'Those are my friends' — the friends are:","opts":["near and one friend","near and many friends","far and one friend","far and many friends"],"ans":3},{"type":"fill","q":"___ do you like pizza? Because it is delicious!","blank":"Why","hint":"Asking for a reason"}],"tip":"You are doing AMAZINGLY! Nearly at A1 level. Keep speaking English every day — even just a little!","speak":["I love reading English books.","Those are my friends over there.","Why do I like English? Because it opens doors!","These are my notes from lessons 31 to 39."]}];
+const KD='r360_p11C_done',KS='r360_p11C_sc';
+let ci=0;
+const done=new Set(JSON.parse(localStorage.getItem(KD)||'[]'));
+const sc=JSON.parse(localStorage.getItem(KS)||'{}');
+function save(){localStorage.setItem(KD,JSON.stringify([...done]));localStorage.setItem(KS,JSON.stringify(sc));}
+function isCk(t){return /CHECKPOINT|FINAL|EVALUATION|GRADUATION|PLACEMENT/.test(t);}
+function bSB(){
+  const ll=document.getElementById('ll');ll.innerHTML='';
+  LS.forEach((l,i)=>{
+    const d=document.createElement('div');
+    d.className='li'+(i===ci?' active':'')+(done.has(i)?' done':'')+(isCk(l.title)?' ckpt':'');
+    d.onclick=()=>go(i);
+    d.innerHTML=`<div class="ln">${done.has(i)?'✓':l.n}</div><div class="lt">${l.title}</div>`;
+    ll.appendChild(d);
+  });
+  const pct=Math.round(done.size/LS.length*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pl').textContent=done.size+' / '+LS.length+' completadas';
+  ll.querySelector('.active')?.scrollIntoView({block:'nearest'});
+}
+function nav(d){const n=ci+d;if(n>=0&&n<LS.length)go(n);}
+function go(i){ci=i;render();bSB();window.scrollTo(0,0);}
+function sp(txt){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-US';u.rate=0.88;u.pitch=1.05;window.speechSynthesis.speak(u);return u;
+}
+function tog(id){const b=document.getElementById('sb_'+id),t=document.getElementById('st_'+id);b.classList.toggle('col');t.textContent=b.classList.contains('col')?'▼':'▲';}
+function qAns(eid,ch,ans){
+  document.querySelectorAll('[id^="'+eid+'_o"]').forEach((b,i)=>{b.disabled=true;if(i===ans)b.classList.add('ca');if(i===ch&&i!==ans)b.classList.add('wa');});
+  const fb=document.getElementById(eid+'_fb'),wrap=document.getElementById(eid+'_w');
+  const ei=parseInt(eid.split('_')[2]);
+  if(!sc[ci])sc[ci]={c:0,t:LS[ci].exercises.length,a:0};
+  if(sc[ci].a<=ei){
+    sc[ci].a=ei+1;
+    if(ch===ans){sc[ci].c++;fb.textContent='✓ ¡Correcto!';fb.className='fb show ok';wrap.classList.add('ok');}
+    else{fb.textContent='✗ Respuesta: '+LS[ci].exercises[ei].opts[ans];fb.className='fb show no';wrap.classList.add('no');}
+    uSB();save();
+  }
+}
+function chkF(eid,ans){
+  const inp=document.getElementById(eid+'_i'),fb=document.getElementById(eid+'_fb'),wrap=document.getElementById(eid+'_w');
+  const v=inp.value.trim().toLowerCase(),a=String(ans).toLowerCase();
+  if(!v)return;
+  const ei=parseInt(eid.split('_')[2]);
+  if(!sc[ci])sc[ci]={c:0,t:LS[ci].exercises.length,a:0};
+  if(sc[ci].a<=ei){
+    sc[ci].a=ei+1;inp.disabled=true;
+    const flex=['(any letter)','(your age)',"(today's day)",'(your day)','(your name)'];
+    const ok=flex.some(f=>a.includes(f))||v===a||v.includes(a)||a.includes(v);
+    if(ok){inp.classList.add('ok');fb.textContent='✓ ¡Correcto! ¡Bien hecho!';fb.className='fb show ok';wrap.classList.add('ok');sc[ci].c++;}
+    else{inp.classList.add('no');fb.textContent='✗ Respuesta: '+ans;fb.className='fb show no';wrap.classList.add('no');}
+    uSB();save();
+  }
+}
+function uSB(){
+  const s=sc[ci]||{c:0,t:LS[ci].exercises.length};
+  const pct=Math.round(s.c/s.t*100);
+  const sv=document.querySelector('.sv'),sf=document.querySelector('.sf');
+  if(sv)sv.textContent=s.c+'/'+s.t;if(sf)sf.style.width=pct+'%';
+}
+function rst(){delete sc[ci];done.delete(ci);save();render();bSB();}
+function markDone(){done.add(ci);save();bSB();if(ci<LS.length-1)setTimeout(()=>nav(1),300);else document.getElementById('db').textContent='🎉 ¡Unidad Completada!';}
+function spP(btn,txt){btn.classList.add('pl');const u=sp(txt);if(u)u.onend=()=>btn.classList.remove('pl');setTimeout(()=>btn.classList.remove('pl'),5000);}
+function render(){
+  const l=LS[ci];
+  document.getElementById('bg').textContent='Lección '+l.n;
+  document.getElementById('pb').disabled=ci===0;
+  document.getElementById('nb').disabled=ci===LS.length-1;
+  const s=sc[ci]||{c:0,t:l.exercises.length};
+  const pct=Math.round(s.c/s.t*100);
+  let h=`<div class="lh"><div class="tag">Fase 1 · Lección ${l.n}</div><h1 class="t">${l.title}</h1><p class="obj">🎯 ${l.obj}</p></div>`;
+  h+=`<div class="sbar"><div><div class="slb">Ejercicios</div><div class="sv">${s.c}/${s.t}</div></div><div class="st"><div class="sf" style="width:${pct}%"></div></div><button class="rst" onclick="rst()">↺ Reiniciar</button></div>`;
+  // Vocabulary
+  h+=`<div class="sec"><div class="sh2" onclick="tog('v')"><div class="sico">📚</div><span class="slbl">Vocabulario (${l.vocab.length} palabras)</span><span class="stog" id="st_v">▲</span></div><div class="sbody" id="sb_v"><div class="vg">`;
+  l.vocab.forEach(([en,es])=>h+=`<div class="vc" onclick="sp('${en.replace(/'/g,"\\'")}')"><div class="ven">${en}</div><div class="ves">${es}</div><div class="vsic">🔊 toca para escuchar</div></div>`);
+  h+=`</div></div></div>`;
+  // Grammar
+  h+=`<div class="sec"><div class="sh2" onclick="tog('g')"><div class="sico">📐</div><span class="slbl">Gramática</span><span class="stog" id="st_g">▲</span></div><div class="sbody" id="sb_g"><div class="grule"><div class="grl">Regla</div><div class="grt">${l.grammar.rule}</div></div><ul class="el">`;
+  l.grammar.examples.forEach(ex=>h+=`<li class="ei"><span class="edot">▸</span><span>${ex}</span><button class="esp" onclick="sp('${ex.replace(/'/g,"\\'")}')">🔊</button></li>`);
+  h+=`</ul></div></div>`;
+  // Exercises
+  h+=`<div class="sec"><div class="sh2" onclick="tog('e')"><div class="sico">✏️</div><span class="slbl">Ejercicios</span><span class="stog" id="st_e">▲</span></div><div class="sbody" id="sb_e">`;
+  l.exercises.forEach((ex,ei)=>{
+    const eid=`ex_${ci}_${ei}`;
+    if(ex.type==='quiz'){
+      h+=`<div class="ex" id="${eid}_w"><div class="exn">Pregunta ${ei+1}</div><div class="exq">${ex.q}</div><div class="opts">`;
+      ex.opts.forEach((o,oi)=>h+=`<button class="ob" id="${eid}_o${oi}" onclick="qAns('${eid}',${oi},${ex.ans})">${o}</button>`);
+      h+=`</div><div class="fb" id="${eid}_fb"></div></div>`;
+    }else{
+      h+=`<div class="ex" id="${eid}_w"><div class="exn">Pregunta ${ei+1}</div><div class="exq">${ex.q}</div><div class="fw"><input class="fi" id="${eid}_i" placeholder="Escribe tu respuesta…" onkeydown="if(event.key==='Enter')chkF('${eid}',${JSON.stringify(ex.blank)})"><button class="cb" onclick="chkF('${eid}',${JSON.stringify(ex.blank)})">Verificar</button></div><div class="fh">💡 ${ex.hint}</div><div class="fb" id="${eid}_fb"></div></div>`;
+    }
+  });
+  h+=`</div></div>`;
+  // Speaking
+  h+=`<div class="sec"><div class="sh2" onclick="tog('s')"><div class="sico">🎤</div><span class="slbl">Práctica Oral</span><span class="stog" id="st_s">▲</span></div><div class="sbody" id="sb_s"><div class="spg">`;
+  l.speak.forEach(s2=>h+=`<div class="spr"><span class="spt">${s2}</span><button class="spb" onclick="spP(this,'${s2.replace(/'/g,"\\'")}')">🔊 Escucha y Repite</button></div>`);
+  h+=`</div></div></div>`;
+  // Tip
+  h+=`<div class="tip"><div class="tipico">💡</div><div class="tiptxt">${l.tip}</div></div>`;
+  // Complete
+  h+=`<div style="margin-top:22px;text-align:center;"><button id="db" onclick="markDone()" style="padding:13px 32px;background:var(--brand);border:none;border-radius:9px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;">${done.has(ci)?'✓ Completada — Siguiente →':'✅ Marcar como Completada'}</button></div>`;
+  document.getElementById('mc').innerHTML=h;
+}
+bSB();render();
+</script>
+</body>
+</html>
